@@ -1,0 +1,64 @@
+[2024-12-25T13:10:55.965+0000] {processor.py:186} INFO - Started process (PID=62) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:10:55.965+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:10:55.967+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:55.967+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:10:55.978+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:10:56.182+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.182+0000] {override.py:1911} INFO - Created Permission View: can edit on DAG:losowa_nazwa
+[2024-12-25T13:10:56.196+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.196+0000] {override.py:1911} INFO - Created Permission View: can read on DAG:losowa_nazwa
+[2024-12-25T13:10:56.204+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.204+0000] {override.py:1911} INFO - Created Permission View: can delete on DAG:losowa_nazwa
+[2024-12-25T13:10:56.212+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.212+0000] {override.py:1911} INFO - Created Permission View: can create on DAG Run:losowa_nazwa
+[2024-12-25T13:10:56.218+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.218+0000] {override.py:1911} INFO - Created Permission View: menu access on DAG Run:losowa_nazwa
+[2024-12-25T13:10:56.224+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.224+0000] {override.py:1911} INFO - Created Permission View: can read on DAG Run:losowa_nazwa
+[2024-12-25T13:10:56.230+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.230+0000] {override.py:1911} INFO - Created Permission View: can delete on DAG Run:losowa_nazwa
+[2024-12-25T13:10:56.230+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.230+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:10:56.240+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.240+0000] {dag.py:3262} INFO - Creating ORM DAG for losowa_nazwa
+[2024-12-25T13:10:56.248+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:10:56.248+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:10:56.263+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.303 seconds
+[2024-12-25T13:11:26.707+0000] {processor.py:186} INFO - Started process (PID=126) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:11:26.715+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:11:26.717+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:11:26.717+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:11:26.723+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:11:26.739+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:11:26.739+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:11:26.760+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:11:26.760+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:11:26.777+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.075 seconds
+[2024-12-25T13:28:46.961+0000] {processor.py:186} INFO - Started process (PID=61) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:28:46.962+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:28:46.964+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:28:46.964+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:28:46.976+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:28:47.013+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:28:47.013+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:28:47.033+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:28:47.033+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:28:47.050+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.093 seconds
+[2024-12-25T13:29:17.437+0000] {processor.py:186} INFO - Started process (PID=131) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:29:17.445+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:29:17.447+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:29:17.447+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:29:17.454+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:29:17.473+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:29:17.472+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:29:17.493+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:29:17.492+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:29:17.514+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.082 seconds
+[2024-12-25T13:29:48.307+0000] {processor.py:186} INFO - Started process (PID=195) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:29:48.309+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:29:48.311+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:29:48.311+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:29:48.319+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:29:48.337+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:29:48.337+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:29:48.356+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:29:48.356+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:29:48.373+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.072 seconds
+[2024-12-25T13:30:18.675+0000] {processor.py:186} INFO - Started process (PID=259) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:30:18.683+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:30:18.685+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:30:18.685+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:30:18.691+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:30:18.708+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:30:18.707+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:30:18.727+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:30:18.726+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:30:18.745+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.075 seconds
+[2024-12-25T13:33:34.227+0000] {processor.py:186} INFO - Started process (PID=55) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:33:34.229+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:33:34.231+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:33:34.231+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:33:34.239+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:33:34.261+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:33:34.261+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:33:34.283+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:33:34.283+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:33:34.303+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.080 seconds
+[2024-12-25T13:34:04.785+0000] {processor.py:186} INFO - Started process (PID=119) to work on /opt/airflow/dags/test.py
+[2024-12-25T13:34:04.793+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/test.py for tasks to queue
+[2024-12-25T13:34:04.795+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:34:04.794+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/test.py
+[2024-12-25T13:34:04.801+0000] {processor.py:925} INFO - DAG(s) 'losowa_nazwa' retrieved from /opt/airflow/dags/test.py
+[2024-12-25T13:34:04.816+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:34:04.816+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2024-12-25T13:34:04.835+0000] {logging_mixin.py:190} INFO - [2024-12-25T13:34:04.834+0000] {dag.py:4180} INFO - Setting next_dagrun for losowa_nazwa to 2024-12-24 00:00:00+00:00, run_after=2024-12-25 00:00:00+00:00
+[2024-12-25T13:34:04.853+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/test.py took 0.073 seconds
