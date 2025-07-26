@@ -25,7 +25,8 @@ PORNSTAR_PHOTO	= ".phncdn.com/"                                       # for vali
 
 VIDEOS_URL      = "/video"
 VIDEO_URL	= "/view_video.php?viewkey="                                # for validation
-VIDEO_IMAGE_URL = ".phncdn.com/videos/"                        # for validation
+VIDEO_IMAGE_URL = ".phncdn.com/videos/"
+CHANNEL_VIDEO_URL = '/videos'                        # for validation
 
 ALBUMS_URL      = "/albums/"
 ALBUM_URL	    = "/album/"                                     # for validation

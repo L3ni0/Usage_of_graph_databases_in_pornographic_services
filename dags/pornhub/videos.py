@@ -4,8 +4,8 @@ from .core import *
 import re
 import json
 
-class Videos(object):
 
+class Videos(object):
     def __init__(self, ProxyDictionary, keywords=[], *args):
         self.keywords = keywords
         self.ProxyDictionary = ProxyDictionary
@@ -19,7 +19,13 @@ class Videos(object):
         if self.keywords:
             sort_types = {"recent": "mr", "view": "mv", "rate": "tr", "long": "lg"}
         else:
-            sort_types = {"view": "mv", "rate": "tr", "hot":"ht", "long": "lg", "new": "cm"}
+            sort_types = {
+                "view": "mv",
+                "rate": "tr",
+                "hot": "ht",
+                "long": "lg",
+                "new": "cm",
+            }
 
         for key in sort_types:
             if key in sort_by.lower():
@@ -44,9 +50,11 @@ class Videos(object):
                 elif (item == "homemade") or (item == "home"):
                     payload["p"] = "homemade"
                 else:
-                    payload["search"] += (item + " ")
+                    payload["search"] += item + " "
 
-            payload["search"] = payload["search"].strip() # removing the last space, otherwise it will always be 1 page
+            payload["search"] = payload[
+                "search"
+            ].strip()  # removing the last space, otherwise it will always be 1 page
 
         video_sort = self._sortVideos(sort_by)
         for key in video_sort:
@@ -57,35 +65,49 @@ class Videos(object):
         return payload
 
     def _loadPage(self, page_num=None, sort_by=None, url=None, viewkey=None):
-
         # load search page
         if page_num:
             search_url = BASE_URL + VIDEOS_URL
             if self.keywords:
                 search_url += SEARCH_URL
-            r = requests.get(search_url, params=self._craftVideosURL(page_num, sort_by), headers=HEADERS, proxies=self.ProxyDictionary, cookies=COOKIES)
+            r = requests.get(
+                search_url,
+                params=self._craftVideosURL(page_num, sort_by),
+                headers=HEADERS,
+                proxies=self.ProxyDictionary,
+                cookies=COOKIES,
+            )
 
         # load video page
         else:
             if url and isVideo(url):
-                r = requests.get(url, headers=HEADERS, proxies=self.ProxyDictionary, cookies=COOKIES)
+                r = requests.get(
+                    url, headers=HEADERS, proxies=self.ProxyDictionary, cookies=COOKIES
+                )
             else:
-                r = requests.get(BASE_URL + VIDEO_URL + viewkey, headers=HEADERS, proxies=self.ProxyDictionary, cookies=COOKIES)
+                r = requests.get(
+                    BASE_URL + VIDEO_URL + viewkey,
+                    headers=HEADERS,
+                    proxies=self.ProxyDictionary,
+                    cookies=COOKIES,
+                )
 
         html = r.text
 
         return BeautifulSoup(html, "lxml")
 
     def _scrapLiVideos(self, soup_data):
-        return soup_data.find("div", class_="sectionWrapper").find_all("li", { "class" : re.compile(".*videoblock videoBox.*") } )
+        return soup_data.find("div", class_="sectionWrapper").find_all(
+            "li", {"class": re.compile(".*videoblock videoBox.*")}
+        )
 
     def _scrapVideosInfo(self, div_el):
         data = {
-            "title"         : None,     # string
-            "url"           : None,     # string
-            "rating"        : None,     # integer
-            "duration"      : None,     # string
-            "img_url"       : None      # string
+            "title": None,  # string
+            "url": None,  # string
+            "rating": None,  # integer
+            "duration": None,  # string
+            "img_url": None,  # string
         }
 
         # scrap url, name
@@ -110,7 +132,7 @@ class Videos(object):
                 pass
 
         # scrap duration
-        for var_tag in div_el.find_all("var", { "class" : "duration" } ):
+        for var_tag in div_el.find_all("var", {"class": "duration"}):
             try:
                 data["duration"] = str(var_tag).split(">")[-2].split("<")[-2]
                 break
@@ -118,9 +140,9 @@ class Videos(object):
                 pass
 
         # scrap rating
-        for div_tag in div_el.find_all("div", { "class" : "value" } ):
+        for div_tag in div_el.find_all("div", {"class": "value"}):
             try:
-                data["rating"] = int( str(div_tag).split(">")[1].split("%")[0] )
+                data["rating"] = int(str(div_tag).split(">")[1].split("%")[0])
                 break
             except Exception as e:
                 pass
@@ -130,50 +152,54 @@ class Videos(object):
 
     # Scrap duration, upload_date, author, embed_url, accurate_views
     def _scrapScriptInfo(self, soup_data):
-
         data = dict()
-        script_dict = json.loads(soup_data.replace("'",'"'))
+        script_dict = json.loads(soup_data.replace("'", '"'))
 
         data["author"] = script_dict["author"]
-        data["embed_url"] = script_dict["embedUrl"]
-        data["duration"] = ":".join(re.findall(r"\d\d",script_dict["duration"]))
-        data["upload_date"] = re.findall(r"\d{4}-\d{2}-\d{2}",script_dict["uploadDate"])[0]
-        data["accurate_views"] = int(script_dict["interactionStatistic"][0]["userInteractionCount"].replace(",",""))
+        # data["embed_url"] = script_dict["embedUrl"]
+        data["duration"] = ":".join(re.findall(r"\d\d", script_dict["duration"]))
+        data["upload_date"] = re.findall(
+            r"\d{4}-\d{2}-\d{2}", script_dict["uploadDate"]
+        )[0]
+        data["accurate_views"] = int(
+            script_dict["interactionStatistic"][0]["userInteractionCount"].replace(
+                ",", ""
+            )
+        )
 
         return data
 
     def _scrapVideoInfo(self, soup_data):
-
         data = {
-            "title"             : None,     # string
-            "views"             : None,     # string
-            "accurate_views"    : None,     # integer
-            "rating"            : None,     # integer
-            "duration"          : None,     # string
-            "loaded"            : None,     # string
-            "upload_date"       : None,     # string
-            "likes"             : None,     # string
-            "accurate_likes"    : None,     # integer
-            "dislikes"          : None,     # string
-            "accurate_dislikes" : None,     # integer
-            "favorite"          : None,     # string
-            "author"            : None,     # string
-            "pornstars"         : None,     # list
-            "categories"        : None,     # list
-            "tags"              : None,     # list
-            "production"        : None,     # string
-            "url"               : None,     # string
-            "img_url"           : None,     # string
-            "embed_url"         : None      # string
+            "title": None,  # string
+            "views": None,  # string
+            "accurate_views": None,  # integer
+            "rating": None,  # integer
+            "duration": None,  # string
+            "loaded": None,  # string
+            "upload_date": None,  # string
+            "likes": None,  # string
+            "accurate_likes": None,  # integer
+            "favorite": None,  # string
+            "author": None,  # string
+            "pornstars": None,  # list
+            "categories": None,  # list
+            "tags": None,  # list
+            "production": None,  # string
+            "url": None,  # string
+            "img_url": None,  # string
+            "embed_url": None,  # string
         }
 
         # Scrap duration, upload_date, author, embed_url, accurate_views
-        try:
-            script_data = self._scrapScriptInfo(soup_data.find("script", type="application/ld+json").text)
-        except:
-            data["title"] = "***Video not available in your country***"
-            return data
-
+        # try:
+        script_data = self._scrapScriptInfo(
+            soup_data.find("script", type="application/ld+json").text
+        )
+        # except:
+        #     data["title"] = "***Video not available in your country***"
+        #     return data
+        # print(soup_data)
         for key in script_data:
             data[key] = script_data[key]
 
@@ -184,24 +210,33 @@ class Videos(object):
         video = soup_data.find("div", class_="video-wrapper")
 
         data["views"] = video.find("span", class_="count").text  # Scrap view
-        data["rating"] = int(video.find("span", class_="percent").text.replace("%",""))  # Scrap rating
+        # data["rating"] = int(
+        #     video.find("span", class_="percent").text.replace("%", "")
+        # )  # Scrap rating
         data["loaded"] = video.find("span", class_="white").text  # Scrap loaded
         data["likes"] = video.find("span", class_="votesUp").text  # Scrap like
-        data["accurate_likes"] = video.find("span", class_="votesUp")["data-rating"]  # Scrap accurate_like
-        data["dislikes"] = video.find("span", class_="votesDown").text  # Scrap dislike
-        data["accurate_dislikes"] = video.find("span", class_="votesDown")["data-rating"] # Scrap accurate_dislike
-        data["favorite"] = video.find("span", class_="favoritesCounter").text.strip() # Scrap favorite
-        data["production"] = video.find("div", class_="productionWrapper").find_all("a", class_="item")[0].text # Scrap production
+        data["accurate_likes"] = video.find("span", class_="votesUp")[
+            "data-rating"
+        ]  # Scrap accurate_like
+        data["production"] = (
+            video.find("div", class_="productionWrapper")
+            .find_all("a", class_="item")[0]
+            .text
+        )  # Scrap production
 
         # Scrap pornstars
         pornstars = []
         for star in video.find_all("a", class_="pstar-list-btn"):
             pornstars.append(star.text.strip())
+        if not pornstars:
+            pornstars.append("")
         data["pornstars"] = pornstars
 
         # Scrap categories
         categories = []
-        for category in video.find("div", class_="categoriesWrapper").find_all("a", class_="item"):
+        for category in video.find("div", class_="categoriesWrapper").find_all(
+            "a", class_="item"
+        ):
             categories.append(category.text)
         data["categories"] = categories
 
@@ -225,7 +260,9 @@ class Videos(object):
         else:
             print("***URL or Viewkey not entered***")
 
-    def getVideos(self, quantity = 1, page = 1, sort_by = None, full_data=False, infinity = False):
+    def getVideos(
+        self, quantity=1, page=1, sort_by=None, full_data=False, infinity=False
+    ):
         """
         Get videos basic informations.
 
@@ -241,7 +278,9 @@ class Videos(object):
         found = 0
 
         while True:
-            for possible_video in self._scrapLiVideos(self._loadPage(page_num=page, sort_by=sort_by)):
+            for possible_video in self._scrapLiVideos(
+                self._loadPage(page_num=page, sort_by=sort_by)
+            ):
                 data_dict = self._scrapVideosInfo(possible_video)
 
                 if data_dict:
@@ -252,6 +291,7 @@ class Videos(object):
 
                     if not infinity:
                         found += 1
-                        if found >= quantity: return
+                        if found >= quantity:
+                            return
 
             page += 1
