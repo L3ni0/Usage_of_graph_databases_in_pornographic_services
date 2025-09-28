@@ -2,3 +2,4 @@ logs/
 .vscode
 .venv
 .ruff_cache
+dags/__pycache__
