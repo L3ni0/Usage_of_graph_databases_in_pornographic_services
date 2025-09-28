@@ -1,4 +1,4 @@
-logs/
+logs
 .vscode
 .venv
 .ruff_cache
