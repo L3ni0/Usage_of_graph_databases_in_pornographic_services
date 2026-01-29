@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from sqlalchemy import false
 from .core import *
 import re
 import json
@@ -190,7 +191,11 @@ class Videos(object):
             "img_url": None,  # string
             "embed_url": None,  # string
         }
-
+        html_tag = soup_data.find("html")
+        is_shorties = "shorties" in html_tag.get("class", []) if html_tag else False
+        if is_shorties:
+            return data
+        # print(soup_data)
         # Scrap duration, upload_date, author, embed_url, accurate_views
         # try:
         script_data = self._scrapScriptInfo(
@@ -213,16 +218,16 @@ class Videos(object):
         # data["rating"] = int(
         #     video.find("span", class_="percent").text.replace("%", "")
         # )  # Scrap rating
-        data["loaded"] = video.find("span", class_="white").text  # Scrap loaded
+        # data["loaded"] = video.find("span", class_="white").text  # Scrap loaded
         data["likes"] = video.find("span", class_="votesUp").text  # Scrap like
         data["accurate_likes"] = video.find("span", class_="votesUp")[
             "data-rating"
         ]  # Scrap accurate_like
-        data["production"] = (
-            video.find("div", class_="productionWrapper")
-            .find_all("a", class_="item")[0]
-            .text
-        )  # Scrap production
+        # data["production"] = (
+        # video.find("div", class_="productionWrapper")
+        # .find_all("a", class_="item")[0]
+        # .text
+        # )  # Scrap production
 
         # Scrap pornstars
         pornstars = []
