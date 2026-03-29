@@ -3,3 +3,4 @@ logs
 .venv
 .ruff_cache
 dags/__pycache__
+dags/pornhub/__pycache__

@@ -7,7 +7,7 @@ import traceback
 
 
 class DataLoader:
-    def __init__(self):
+    def __init__(self) -> None:
         # conf
         self.POSTGRES_URL = "postgresql+psycopg2://user:password@localhost:5432/star_db"
         self.NEO4J_URI = "neo4j://localhost:7687"
@@ -20,10 +20,14 @@ class DataLoader:
         self.tag_cache = {}
 
     def clean_list(self, items):
-        """Drop empty strings and None's"""
+        """Drop empty strings and None's."""
         if not items:
             return []
         return [item.strip() for item in items if item and item.strip()]
+
+    def _string_to_int(self, string_numb: str) -> int:
+        int_numb = int(string_numb.replace("K", "000").replace("M", "000000"))
+        return int_numb
 
     def bulk_load_to_neo4j(self, videos_data):
         driver = GraphDatabase.driver(self.NEO4J_URI, auth=self.NEO4J_AUTH)
@@ -38,13 +42,13 @@ class DataLoader:
             MERGE (s:Star {name: star_name})
             MERGE (s)-[:APPEARS_IN]->(v)
         )
-        
+
         WITH v, video
         FOREACH (category_name IN video.categories |
             MERGE (c:Category {name: category_name})
             MERGE (v)-[:IN_CATEGORY]->(c)
         )
-        
+
         WITH v, video
         FOREACH (tag_name IN video.tags |
             MERGE (t:Tag {name: tag_name})
@@ -63,17 +67,13 @@ class DataLoader:
                     views = video.get("accurate_views")
                     if views is None:
                         views_str = video.get("views", "0")
-                        views = (
-                            int(views_str.replace("K", "000").replace("M", "000000"))
-                            if views_str
-                            else 0
-                        )
+                        views = self._string_to_int(views_str) if views_str else 0
 
                     likes = video.get("accurate_likes")
                     if likes is None:
                         likes = 0
                     elif isinstance(likes, str):
-                        likes = int(likes.replace("K", "000").replace("M", "000000"))
+                        likes = self._string_to_int(likes)
 
                     neo4j_videos.append(
                         {
@@ -90,7 +90,7 @@ class DataLoader:
                             "pstars": pstars,
                             "categories": categories,
                             "tags": tags,
-                        }
+                        },
                     )
 
                 result = session.run(bulk_query, videos=neo4j_videos)
@@ -107,8 +107,6 @@ class DataLoader:
             driver.close()
 
     def run_optimized(self, limit_stars=None):
-        """Optymalizowane ładowanie z cache'owaniem"""
-
         if limit_stars:
             stars_generator = self.client.getStars(quantity=limit_stars, sort_by="rank")
         else:
@@ -138,7 +136,7 @@ class DataLoader:
                 print(f"{len(all_videos_data)} videos")
 
                 if all_videos_data:
-                    print("Loading to Neo4j...")
+                    print("Loading to Neo4j")
                     self.bulk_load_to_neo4j(all_videos_data)
 
             except Exception as e:
