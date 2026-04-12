@@ -19,7 +19,7 @@ class DataLoader:
         self.category_cache = {}
         self.tag_cache = {}
 
-    def clean_list(self, items):
+    def _clean_list(self, items: list | tuple):
         """Drop empty strings and None's."""
         if not items:
             return []
@@ -56,24 +56,31 @@ class DataLoader:
         )
         """
 
+        def normalise_views(video: dict) -> int:
+            views = video.get("accurate_views")
+            if views is None:
+                views_str = video.get("views", "0")
+                views = self._string_to_int(views_str)
+            return views
+
+        def normalise_likes(video: dict) -> int:
+            likes = video.get("accurate_likes")
+            if likes is None:
+                likes = 0
+            elif isinstance(likes, str):
+                likes = self._string_to_int(likes)
+            return likes
+
         try:
             with driver.session(database="neo4j") as session:
                 neo4j_videos = []
                 for video in videos_data:
-                    pstars = self.clean_list(video.get("pornstars", []))
-                    categories = self.clean_list(video.get("categories", []))
-                    tags = self.clean_list(video.get("tags", []))
+                    pstars = self._clean_list(video.get("pornstars", []))
+                    categories = self._clean_list(video.get("categories", []))
+                    tags = self._clean_list(video.get("tags", []))
 
-                    views = video.get("accurate_views")
-                    if views is None:
-                        views_str = video.get("views", "0")
-                        views = self._string_to_int(views_str) if views_str else 0
-
-                    likes = video.get("accurate_likes")
-                    if likes is None:
-                        likes = 0
-                    elif isinstance(likes, str):
-                        likes = self._string_to_int(likes)
+                    views = normalise_views(video)
+                    likes = normalise_likes(video)
 
                     neo4j_videos.append(
                         {
@@ -106,7 +113,7 @@ class DataLoader:
         finally:
             driver.close()
 
-    def run_optimized(self, limit_stars=None):
+    def run_optimized(self, limit_stars: int | None = None) -> None:
         if limit_stars:
             stars_generator = self.client.getStars(quantity=limit_stars, sort_by="rank")
         else:
@@ -123,7 +130,7 @@ class DataLoader:
                     type=star_data.get("type"),
                 )
 
-                for video_url in video_urls:
+                for video_url in set(video_urls):
                     try:
                         print(f"{video_url}")
                         video_details = self.client.getVideo(url=video_url)
